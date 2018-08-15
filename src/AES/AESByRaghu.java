@@ -1,4 +1,4 @@
-package com.app.aes;
+package AES;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,11 +11,10 @@ public class AESByRaghu {
 	private static SecretKeySpec securityKey;
 	private static byte[] actualKey;
 
-	private static void setKeyData(String myKey) {
+	public static void setKeyData(String myKey) {
 		MessageDigest sha_1 = null;
 		try {
 			actualKey = myKey.getBytes();
-
 			sha_1 = MessageDigest.getInstance("SHA-1");
 			actualKey = sha_1.digest(actualKey);
 			actualKey = Arrays.copyOf(actualKey, 16);
@@ -24,7 +23,7 @@ public class AESByRaghu {
 			e.printStackTrace();
 		}
 
-	}// setKeyData()
+	}
 
 	public static String encryptInput(String normalStr, String secretKey) {
 		try {
@@ -32,38 +31,34 @@ public class AESByRaghu {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, securityKey);
 			return new String(cipher.doFinal(normalStr.getBytes()));
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-	}// encryptInput()
+	}
 
 	public static String decryptInput(String encryptedStr, String secret) {
 		try {
 			setKeyData(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
 			cipher.init(Cipher.DECRYPT_MODE, securityKey);
 			return new String(cipher.doFinal(encryptedStr.getBytes()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
-	}// /decryptInput()
+	}
 
-	public static void main(String[] args) {
-		final String sampleKey="itisnotpassword!!";
-		
-		String actualStr="javabyraghu@gmail.com";
-		String encryptedString=encryptInput(actualStr, sampleKey);
-		String decryptedString=decryptInput(encryptedString, sampleKey);
-		
-		
+	public static void main(String[] srs) {
+		final String samplKey = "itisnotpassword!!";
+
+		String actualStr = "javabyraghu@gmail.com";
+		String encryptedString = encryptInput(actualStr, samplKey);
+		String decryptedString = decryptInput(encryptedString, samplKey);
+
 		System.out.println(actualStr);
 		System.out.println(encryptedString);
 		System.out.println(decryptedString);
-		
-	}// main()
+	}
 
-}// class
+}
